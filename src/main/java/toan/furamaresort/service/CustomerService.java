@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import toan.furamaresort.model.Customer;
 
 public interface CustomerService {
-    
+
     Iterable<Customer> getAllActiveCustomers();
 
     Page<Customer> getAllActiveCustomers(Pageable pageable);
@@ -15,5 +15,5 @@ public interface CustomerService {
 
     Customer findById(Integer id);
 
-    Iterable<Customer> findCustomers(Pageable pageable, String customerCode, String customerPhone);
+    Page<Customer> findCustomers(String customerCode, String customerPhone, Pageable pageable);
 }

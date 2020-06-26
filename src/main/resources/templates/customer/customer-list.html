@@ -15,8 +15,9 @@
     </div>
     <div class="customer-menu">
         <form>
-            <input type="text" name="customer_code" placeholder="Enter customer's code">
-            <input type="text" name="customer_phone" size="30" placeholder="Enter customer's phone number">
+            <input type="text" name="customerCode" placeholder="Enter customer's code" th:value="${customerCode}">
+            <input type="text" name="customerPhone" size="30" placeholder="Enter customer's phone number"
+                th:value="${customerPhone}">
             <input type="submit" value="Find">
         </form>
     </div>
@@ -54,9 +55,11 @@
         </tbody>
     </table>
     <div>
-        <a th:href="@{'/admin/customer'(page=${customers.number})}" th:if="${customers.hasPrevious()}">Previous</a>
+        <a th:href="@{'/admin/customer'(page=${customers.number},customerCode=${customerCode},customerPhone=${customerPhone})}"
+            th:if="${customers.hasPrevious()}">Previous</a>
         <span th:text="${customers.number + 1}"></span>/<span th:text="${customers.totalPages}"></span>
-        <a th:href="@{'/admin/customer'(page=${customers.number + 2})}" th:if="${customers.hasNext()}">Next</a>
+        <a th:href="@{'/admin/customer'(page=${customers.number + 2},customerCode=${customerCode},customerPhone=${customerPhone})}"
+            th:if="${customers.hasNext()}">Next</a>
     </div>
 </body>
 

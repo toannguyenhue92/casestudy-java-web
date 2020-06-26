@@ -46,13 +46,17 @@ public class CustomerController {
 
     @GetMapping(path = "")
     public String getAllActiveCustomers(@PageableDefault(size = 3) Pageable pageable,
-            @RequestParam(name = "customer_code", required = false) String customerCode,
-            @RequestParam(name = "customer_phone", required = false) String customerPhone,
+            @RequestParam(name = "customerCode", required = false) String customerCode,
+            @RequestParam(name = "customerPhone", required = false) String customerPhone,
             Model model) {
-        Iterable<Customer> cus =
-                customerService.findCustomers(pageable, customerCode, customerPhone);
-        System.out.println(cus);
-        model.addAttribute("customers", customerService.getAllActiveCustomers(pageable));
+        model.addAttribute("customers",
+                customerService.findCustomers(customerCode, customerPhone, pageable));
+        if (customerCode != null) {
+            model.addAttribute("customerCode", customerCode);
+        }
+        if (customerCode != null) {
+            model.addAttribute("customerPhone", customerPhone);
+        }
         return "customer/customer-list";
     }
 

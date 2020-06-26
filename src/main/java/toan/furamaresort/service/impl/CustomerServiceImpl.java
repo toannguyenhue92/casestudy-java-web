@@ -37,15 +37,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Iterable<Customer> findCustomers(Pageable pageable, String customerCode,
-            String customerPhone) {
+    public Page<Customer> findCustomers(String customerCode, String customerPhone,
+            Pageable pageable) {
         if (customerCode == null) {
             customerCode = "";
         }
         if (customerPhone == null) {
-            customerCode = "";
+            customerPhone = "";
         }
-        return null;
+        return customerRepository.findCustomerByCodeAndPhone(true, customerCode, customerPhone,
+                pageable);
     }
 
 }
