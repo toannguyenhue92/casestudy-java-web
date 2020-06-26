@@ -17,8 +17,35 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerRepository;
 
     @Override
+    public Iterable<Customer> getAllActiveCustomers() {
+        return customerRepository.findAll();
+    }
+
+    @Override
     public Page<Customer> getAllActiveCustomers(Pageable pageable) {
         return customerRepository.findByActive(true, pageable);
+    }
+
+    @Override
+    public void save(Customer customer) {
+        customerRepository.save(customer);
+    }
+
+    @Override
+    public Customer findById(Integer id) {
+        return customerRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Iterable<Customer> findCustomers(Pageable pageable, String customerCode,
+            String customerPhone) {
+        if (customerCode == null) {
+            customerCode = "";
+        }
+        if (customerPhone == null) {
+            customerCode = "";
+        }
+        return null;
     }
 
 }

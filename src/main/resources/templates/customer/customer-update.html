@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Furama Resort</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+    <div class="customer-menu">
+        <a class="btn btn-primary" role="button" href="/admin/customer">Back to customer list</a>
+    </div>
+    <div>
+        <form th:action="@{/admin/customer/__${customer.id}__/update}" method="POST" th:object="${customer}">
+            <div class="form-group">
+                <input type="text" class="form-control" th:field="*{customerCode}" placeholder="customerCode">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" th:field="*{firstName}" placeholder="firstName">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" th:field="*{middleName}" placeholder="middleName">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" th:field="*{lastName}" placeholder="lastName">
+            </div>
+            <div class="form-group">
+                <select class="form-control" name="genderId">
+                    <option th:each="g : ${genders}" th:value="${g.id}" th:text="${g.genderName}"
+                        th:selected="${customer.gender.id == g.id}">genderName</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="date" class="form-control" th:field="*{birthDate}">
+            </div>
+            <div class="form-group">
+                <select class="form-control" name="customerTypeId">
+                    <option th:each="ct : ${customerTypes}" th:value="${ct.id}" th:text="${ct.typeName}"
+                        th:selected="${customer.customerType.id == ct.id}">typeName</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="tel" class="form-control" th:field="*{phoneNumber}" placeholder="phoneNumber">
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" th:field="*{email}" placeholder="email">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" th:field="*{address}" placeholder="address">
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a class="btn btn-danger" role="button" th:href="@{/admin/customer/__${customer.id}__/delete}">Delete</a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
