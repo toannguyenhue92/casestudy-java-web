@@ -14,46 +14,19 @@
         <a class="btn btn-primary" role="button" href="/admin/customer">Back to customer list</a>
     </div>
     <div>
-        <form th:action="@{/admin/customer/__${customer.id}__/delete}" method="POST" th:object="${customer}">
+        <form th:action="@{/admin/customer/__${customer.id}__/delete}" method="POST">
             <div class="form-group">
-                <input type="text" class="form-control" th:field="*{customerCode}" placeholder="customerCode" disabled>
+                <p>Customer code: <span th:text="${customer.customerCode}"></span></p>
+                <p>Full name: <span th:text="${customer.fullName}"></span></p>
+                <p>Gender: <span th:text="${customer.gender.genderName}"></span></p>
+                <p>Birth date: <span th:text="${customer.birthDate}"></span></p>
+                <p>Phone number: <span th:text="${customer.phoneNumber}"></span></p>
+                <p>Email: <span th:text="${customer.email}"></span></p>
+                <p>Type: <span th:text="${customer.customerType.typeName}"></span></p>
+                <p>Address: <span th:text="${customer.address}"></span></p>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" th:field="*{firstName}" placeholder="firstName" disabled>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" th:field="*{middleName}" placeholder="middleName" disabled>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" th:field="*{lastName}" placeholder="lastName" disabled>
-            </div>
-            <div class="form-group">
-                <select class="form-control" name="genderId" disabled>
-                    <option th:each="g : ${genders}" th:value="${g.id}" th:text="${g.genderName}"
-                        th:selected="${customer.gender.id == g.id}">genderName</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <input type="date" class="form-control" th:field="*{birthDate}" disabled>
-            </div>
-            <div class="form-group">
-                <select class="form-control" name="customerTypeId">
-                    <option th:each="ct : ${customerTypes}" th:value="${ct.id}" th:text="${ct.typeName}"
-                        th:selected="${customer.customerType.id == ct.id}">typeName</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <input type="tel" class="form-control" th:field="*{phoneNumber}" placeholder="phoneNumber">
-            </div>
-            <div class="form-group">
-                <input type="email" class="form-control" th:field="*{email}" placeholder="email">
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" th:field="*{address}" placeholder="address">
-            </div>
-            <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <a class="btn btn-danger" role="button" th:href="@{/admin/customer/__${customer.id}__/delete}">Delete</a>
+                <button type="submit" class="btn btn-danger">Delete</button>
             </div>
         </form>
     </div>

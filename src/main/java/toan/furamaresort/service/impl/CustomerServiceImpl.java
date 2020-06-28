@@ -37,16 +37,27 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Page<Customer> findCustomers(String customerCode, String customerPhone,
-            Pageable pageable) {
+    public Page<Customer> findCustomers(String customerCode, String customerPhone, String dateFrom,
+            String dateTo, Pageable pageable) {
         if (customerCode == null) {
             customerCode = "";
         }
         if (customerPhone == null) {
             customerPhone = "";
         }
+        if (dateFrom == null || dateFrom.equals("")) {
+            dateFrom = "1000-01-01";
+        }
+        if (dateTo == null || dateTo.equals("")) {
+            dateTo = "9999-12-31";
+        }
         return customerRepository.findCustomerByCodeAndPhone(true, customerCode, customerPhone,
-                pageable);
+                dateFrom, dateTo, pageable);
+    }
+
+    @Override
+    public void deactivate(Customer customer) {
+        customerRepository.save(customer);
     }
 
 }

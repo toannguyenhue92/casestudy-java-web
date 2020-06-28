@@ -55,8 +55,7 @@ public class Customer {
     @JoinColumn(name = "gender_id")
     private Gender gender;
 
-    @Pattern(regexp = "(^09[01]{1}[0-9]{7}$)|(\\(84\\)\\+9[01]{1}[0-9]{7}$)",
-            message = "Wrong format!")
+    @Pattern(regexp = "(^09[01][0-9]{7}$)|(^\\(84\\)\\+9[01][0-9]{7}$)", message = "Wrong format!")
     @Column(name = "phone_number")
     private String phoneNumber;
 

@@ -9,11 +9,11 @@ import toan.furamaresort.model.Customer;
 
 public interface CustomerRepository extends PagingAndSortingRepository<Customer, Integer> {
 
-    Page<Customer> findByActive(Boolean active, Pageable pageable);
+        Page<Customer> findByActive(Boolean active, Pageable pageable);
 
-    @Query(value = "SELECT * FROM customers WHERE active = ? AND customer_code LIKE %?% "
-            + " AND phone_number LIKE %?%", nativeQuery = true)
-    Page<Customer> findCustomerByCodeAndPhone(Boolean active, String customerCode,
-            String customerPhone, Pageable pageable);
-
+        @Query(value = "SELECT * FROM customers WHERE active = ? AND customer_code LIKE %?% "
+                        + "AND phone_number LIKE %?% AND (birth_date BETWEEN ? AND ?)",
+                        nativeQuery = true)
+        Page<Customer> findCustomerByCodeAndPhone(Boolean active, String customerCode,
+                        String customerPhone, String dateForm, String dateTo, Pageable pageable);
 }

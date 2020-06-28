@@ -15,5 +15,8 @@ public interface CustomerService {
 
     Customer findById(Integer id);
 
-    Page<Customer> findCustomers(String customerCode, String customerPhone, Pageable pageable);
+    Page<Customer> findCustomers(String customerCode, String customerPhone, String dateFrom,
+            String dateTo, Pageable pageable);
+
+    void deactivate(Customer customer);
 }

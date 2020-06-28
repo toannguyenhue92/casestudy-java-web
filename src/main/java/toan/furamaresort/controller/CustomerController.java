@@ -1,7 +1,10 @@
 package toan.furamaresort.controller;
 
+import javax.persistence.criteria.Order;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,17 +48,26 @@ public class CustomerController {
     }
 
     @GetMapping(path = "")
-    public String getAllActiveCustomers(@PageableDefault(size = 3) Pageable pageable,
+    public String getAllActiveCustomers(@PageableDefault(size = 5) Pageable pageable,
             @RequestParam(name = "customerCode", required = false) String customerCode,
             @RequestParam(name = "customerPhone", required = false) String customerPhone,
-            Model model) {
-        model.addAttribute("customers",
-                customerService.findCustomers(customerCode, customerPhone, pageable));
+            @RequestParam(name = "dateFrom", required = false) String dateFrom,
+            @RequestParam(name = "dateTo", required = false) String dateTo, Model model) {
+        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+                Sort.by("birth_date").ascending());
+        model.addAttribute("customers", customerService.findCustomers(customerCode, customerPhone,
+                dateFrom, dateTo, pageable));
         if (customerCode != null) {
             model.addAttribute("customerCode", customerCode);
         }
         if (customerCode != null) {
             model.addAttribute("customerPhone", customerPhone);
+        }
+        if (dateFrom != null) {
+            model.addAttribute("dateFrom", dateFrom);
+        }
+        if (dateTo != null) {
+            model.addAttribute("dateTo", dateTo);
         }
         return "customer/customer-list";
     }
@@ -103,6 +115,27 @@ public class CustomerController {
         customer.setGender(genderService.getGenderById(genderId));
         customer.setCustomerType(customerTypeService.getCustomerTypeById(customerTypeId));
         customerService.save(customer);
+        return "redirect:/admin/customer";
+    }
+
+    @GetMapping(path = "/{id}/delete")
+    public String getFormDeleteCustomer(@PathVariable(name = "id") Integer id, Model model) {
+        Customer customer = customerService.findById(id);
+        if (customer == null) {
+            return "400";
+        }
+        model.addAttribute("customer", customer);
+        return "customer/customer-delete";
+    }
+
+    @PostMapping(path = "/{id}/delete")
+    public String deleteCustomer(@PathVariable(name = "id") Integer id, Model model) {
+        Customer customer = customerService.findById(id);
+        if (customer == null) {
+            return "400";
+        }
+        customer.setActive(false);
+        customerService.deactivate(customer);
         return "redirect:/admin/customer";
     }
 }
