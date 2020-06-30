@@ -25,7 +25,7 @@ public class Stay {
     private String stayServiceCode;
 
     @Column(name = "area")
-    private Integer area;
+    private Double area;
 
     @Column(name = "max_guest")
     private Integer maxGuest;
@@ -39,10 +39,19 @@ public class Stay {
     @Column(name = "stay_service_type")
     private String stayServiceType;
 
-    @Column(name = "descriptions")
-    private String descriptions;
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "standard")
+    private String standard;
+
+    @Column(name = "number_of_floors")
+    private Integer numberOfFloors;
+
+    @Column(name = "pool_area")
+    private Double poolArea;
 
     @Column(name = "active")
-    private Boolean active;
+    private Boolean active = Boolean.TRUE;
 
 }

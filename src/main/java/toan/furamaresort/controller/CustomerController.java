@@ -1,6 +1,5 @@
 package toan.furamaresort.controller;
 
-import javax.persistence.criteria.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -53,10 +52,14 @@ public class CustomerController {
             @RequestParam(name = "customerPhone", required = false) String customerPhone,
             @RequestParam(name = "dateFrom", required = false) String dateFrom,
             @RequestParam(name = "dateTo", required = false) String dateTo, Model model) {
+
+        // Sort by first name
         pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
-                Sort.by("birth_date").ascending());
+                Sort.by("first_name").ascending());
+
         model.addAttribute("customers", customerService.findCustomers(customerCode, customerPhone,
                 dateFrom, dateTo, pageable));
+                
         if (customerCode != null) {
             model.addAttribute("customerCode", customerCode);
         }
@@ -96,7 +99,7 @@ public class CustomerController {
     public String getFormUpdateCustomer(@PathVariable(name = "id") Integer id, Model model) {
         Customer customer = customerService.findById(id);
         if (customer == null) {
-            return "400";
+            return "400-bad-request";
         }
         model.addAttribute("customer", customer);
         return "customer/customer-update";
@@ -122,7 +125,7 @@ public class CustomerController {
     public String getFormDeleteCustomer(@PathVariable(name = "id") Integer id, Model model) {
         Customer customer = customerService.findById(id);
         if (customer == null) {
-            return "400";
+            return "400-bad-request";
         }
         model.addAttribute("customer", customer);
         return "customer/customer-delete";
@@ -132,7 +135,7 @@ public class CustomerController {
     public String deleteCustomer(@PathVariable(name = "id") Integer id, Model model) {
         Customer customer = customerService.findById(id);
         if (customer == null) {
-            return "400";
+            return "400-bad-request";
         }
         customer.setActive(false);
         customerService.deactivate(customer);

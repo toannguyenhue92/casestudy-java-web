@@ -5,9 +5,11 @@ import org.springframework.data.domain.Pageable;
 import toan.furamaresort.model.Stay;
 
 public interface StayService {
-    
+
     Page<Stay> getAllStays(Pageable pageable);
 
     Stay findById(Integer id);
+
+	void save(Stay stay);
 
 }

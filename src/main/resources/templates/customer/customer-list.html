@@ -1,92 +1,106 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Welcome to Furama Resort</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/bootstrap.css" />
     <link rel="stylesheet" href="/css/style.css" />
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="customer-menu">
-        <a class="btn btn-primary" role="button" href="/admin/customer/create">New Customer</a>
+      <a class="btn btn-primary" role="button" href="/admin/customer/create">New Customer</a>
     </div>
     <div class="customer-menu">
-        <form>
+      <form>
+        <div class="row">
+          <div class="col">
+            <label>Customer Code</label>
+            <input type="text" class="form-control" name="customerCode" placeholder="Enter customer code" th:value="${customerCode}" />
+          </div>
+          <div class="col">
+            <label>Phone number</label>
+            <input type="tel" class="form-control" name="customerPhone" placeholder="Enter phone number" th:value="${customerPhone}" />
+          </div>
+          <div class="col">
             <div class="row">
-                <div class="col">
-                    <label>Customer Code</label>
-                    <input type="text" name="customerCode" placeholder="Enter customer code" th:value="${customerCode}">
-                </div>
-                <div class="col">
-                    <label>Phone number</label>
-                    <input type="tel" name="customerPhone" placeholder="Enter phone number" th:value="${customerPhone}">
-                </div>
-                <div class="col">
-                    <div class="row">
-                        <label>Birth Date</label>
-                    </div>
-                    <div class="row">
-                        <table>
-                            <tr>
-                                <td><label for="dateFrom">from</label></td>
-                                <td><input type="date" name="dateFrom" id="dateFrom" th:value="${dateFrom}"></td>
-                            </tr>
-                            <tr>
-                                <td><label for="dateTo">to</label></td>
-                                <td><input type="date" name="dateTo" id="dateTo" th:value="${dateTo}"></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col">
-                    <button class="btn btn-primary" type="submit">Search</button>
-                </div>
+              <label>Birth Date (From - To)</label>
             </div>
-        </form>
+            <div class="row">
+              <table>
+                <tr>
+                  <td><input type="date" class="form-control" name="dateFrom" id="dateFrom" th:value="${dateFrom}" /></td>
+                </tr>
+                <tr>
+                  <td><input type="date" class="form-control" name="dateTo" id="dateTo" th:value="${dateTo}" /></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="col">
+            <div class="row">
+              <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
     <table class="table table-striped table-bordered">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col" class="text-center">#</th>
-                <th scope="col" class="text-center">Customer's code</th>
-                <th scope="col" class="text-center">Full name</th>
-                <th scope="col" class="text-center">Gender</th>
-                <th scope="col" class="text-center">Birth date</th>
-                <th scope="col" class="text-center">Phone number</th>
-                <th scope="col" class="text-center">Email</th>
-                <th scope="col" class="text-center">Type</th>
-                <th scope="col" class="text-center">Address</th>
-                <th scope="col" class="text-center">Update</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="customer, iterStats : ${customers}">
-                <th scope="row" th:text="${iterStats.count}"></th>
-                <td th:text="${customer.customerCode}"></td>
-                <td th:text="${customer.fullName}"></td>
-                <td th:text="${customer.gender.genderName}"></td>
-                <td th:text="${customer.birthDate}"></td>
-                <td th:text="${customer.phoneNumber}"></td>
-                <td th:text="${customer.email}"></td>
-                <td th:text="${customer.customerType.typeName}"></td>
-                <td th:text="${customer.address}"></td>
-                <td>
-                    <a class="btn btn-info" role="button"
-                        th:href="@{/admin/customer/__${customer.id}__/update}">Update</a>
-                </td>
-            </tr>
-        </tbody>
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col" class="text-center">#</th>
+          <th scope="col" class="text-center">Customer's code</th>
+          <th scope="col" class="text-center">Full name</th>
+          <th scope="col" class="text-center">Gender</th>
+          <th scope="col" class="text-center">Birth date</th>
+          <th scope="col" class="text-center">Phone number</th>
+          <th scope="col" class="text-center">Email</th>
+          <th scope="col" class="text-center">Type</th>
+          <th scope="col" class="text-center">Address</th>
+          <th scope="col" class="text-center">Update</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="customer, iterStats : ${customers}">
+          <th scope="row" th:text="${iterStats.count}"></th>
+          <td th:text="${customer.customerCode}"></td>
+          <td th:text="${customer.fullName}"></td>
+          <td th:text="${customer.gender.genderName}"></td>
+          <td th:text="${#temporals.format(customer.birthDate,'dd/MM/yyyy')}"></td>
+          <td th:text="${customer.phoneNumber}"></td>
+          <td th:text="${customer.email}"></td>
+          <td th:text="${customer.customerType.typeName}"></td>
+          <td th:text="${customer.address}"></td>
+          <td>
+            <a class="btn btn-info" role="button" th:href="@{/admin/customer/__${customer.id}__/update}">Update</a>
+          </td>
+        </tr>
+      </tbody>
     </table>
-    <div>
-        <a th:href="@{'/admin/customer'(page=${customers.number},customerCode=${customerCode},customerPhone=${customerPhone},dateFrom=${dateFrom},dateTo=${dateTo})}"
-            th:if="${customers.hasPrevious()}">Previous</a>
-        <span th:text="${customers.number + 1}"></span>/<span th:text="${customers.totalPages}"></span>
-        <a th:href="@{'/admin/customer'(page=${customers.number + 2},customerCode=${customerCode},customerPhone=${customerPhone},dateFrom=${dateFrom},dateTo=${dateTo})}"
-            th:if="${customers.hasNext()}">Next</a>
-    </div>
-</body>
-
+    <nav>
+      <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${customers.hasPrevious()} ? '' : 'disabled' ">
+          <a
+            class="page-link"
+            th:href="@{'/admin/customer'(page=${customers.number},customerCode=${customerCode},customerPhone=${customerPhone},dateFrom=${dateFrom},dateTo=${dateTo})}"
+            >Previous</a
+          >
+        </li>
+        <li class="page-item">
+          <a class="page-link"><span th:text="${customers.number + 1}"></span>/<span th:text="${customers.totalPages}"></span></a>
+        </li>
+        <li class="page-item" th:classappend="${customers.hasNext()}? '' : 'disabled' ">
+          <a
+            class="page-link"
+            th:href="@{'/admin/customer'(page=${customers.number + 2},customerCode=${customerCode},customerPhone=${customerPhone},dateFrom=${dateFrom},dateTo=${dateTo})}"
+            >Next</a
+          >
+        </li>
+      </ul>
+    </nav>
+    <script src="/js/jquery-3.3.1.js"></script>
+    <script src="/js/popper.js"></script>
+    <script src="/js/bootstrap.js"></script>
+  </body>
 </html>

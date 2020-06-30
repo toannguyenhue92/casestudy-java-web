@@ -17,7 +17,6 @@ public class StayServiceImpl implements StayService {
     @Autowired
     private StayRepository stayRepository;
 
-
     @Override
     public Page<Stay> getAllStays(Pageable pageable) {
         return stayRepository.findAllByActive(true, pageable);
@@ -26,6 +25,11 @@ public class StayServiceImpl implements StayService {
     @Override
     public Stay findById(Integer id) {
         return stayRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void save(Stay stay) {
+        stayRepository.save(stay);
     }
 
 }

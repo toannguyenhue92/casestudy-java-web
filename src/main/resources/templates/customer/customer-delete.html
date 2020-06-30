@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Welcome to Furama Resort</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/bootstrap.css" />
     <link rel="stylesheet" href="/css/style.css" />
-</head>
+  </head>
 
-<body>
-    <div class="customer-menu">
-        <a class="btn btn-primary" role="button" href="/admin/customer">Back to customer list</a>
+  <body>
+      <form class="center-form" th:action="@{/admin/customer/__${customer.id}__/delete}" method="POST">
+        <div class="form-group">
+          <a class="btn btn-primary form-control" role="button" href="/admin/customer">Back to customer list</a>
+        </div>
+        <div class="form-group">
+          <p>Customer code: <span th:text="${customer.customerCode}"></span></p>
+          <p>Full name: <span th:text="${customer.fullName}"></span></p>
+          <p>Gender: <span th:text="${customer.gender.genderName}"></span></p>
+          <p>Birth date: <span th:text="${customer.birthDate}"></span></p>
+          <p>Phone number: <span th:text="${customer.phoneNumber}"></span></p>
+          <p>Email: <span th:text="${customer.email}"></span></p>
+          <p>Type: <span th:text="${customer.customerType.typeName}"></span></p>
+          <p>Address: <span th:text="${customer.address}"></span></p>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-danger form-control" id="delete">Delete</button>
+        </div>
+      </form>
     </div>
-    <div>
-        <form th:action="@{/admin/customer/__${customer.id}__/delete}" method="POST">
-            <div class="form-group">
-                <p>Customer code: <span th:text="${customer.customerCode}"></span></p>
-                <p>Full name: <span th:text="${customer.fullName}"></span></p>
-                <p>Gender: <span th:text="${customer.gender.genderName}"></span></p>
-                <p>Birth date: <span th:text="${customer.birthDate}"></span></p>
-                <p>Phone number: <span th:text="${customer.phoneNumber}"></span></p>
-                <p>Email: <span th:text="${customer.email}"></span></p>
-                <p>Type: <span th:text="${customer.customerType.typeName}"></span></p>
-                <p>Address: <span th:text="${customer.address}"></span></p>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </div>
-        </form>
-    </div>
-</body>
-
+    <script src="/js/jquery-3.3.1.js"></script>
+    <script src="/js/popper.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script>
+        let deleteButton = document.getElementById("delete");
+        deleteButton.addEventListener("click", function(){
+            return confirm("Are you sure?");
+        });
+    </script>
+  </body>
 </html>
