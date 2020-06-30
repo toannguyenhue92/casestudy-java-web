@@ -39,7 +39,6 @@ public class Customer {
     @Column(name = "first_name")
     private String firstName;
 
-    @NotBlank
     @Column(name = "middle_name")
     private String middleName;
 
@@ -59,6 +58,7 @@ public class Customer {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @NotBlank
     @Email
     @Column(name = "email")
     private String email;

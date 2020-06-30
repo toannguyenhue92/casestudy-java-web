@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,9 +30,11 @@ public class Contract {
     private Integer id;
 
     @Column(name = "check_in_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkInDate;
 
     @Column(name = "check_out_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkOutDate;
 
     @Column(name = "deposit")
@@ -43,4 +47,7 @@ public class Contract {
     @ManyToOne(targetEntity = Customer.class)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
+
+    @Column(name = "active")
+    private Boolean active = Boolean.TRUE;
 }
