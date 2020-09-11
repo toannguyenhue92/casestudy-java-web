@@ -1,3 +1,6 @@
 # casestudy-java-web
-
-1. Thêm khách hàng -> Trùng customerCode (500)
+## Quản lí khách hàng của một resort
+Chức năng
+ - Thêm mới khách hàng
+ - Chỉnh sửa thông tin khách hàng
+ - Tìm kiếm
